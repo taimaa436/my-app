@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "272113082081",
+    "firebase_url": "https://testx-da8cf.firebaseio.com",
+    "project_id": "testx-da8cf",
+    "storage_bucket": "testx-da8cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272113082081:android:69553aa7628002552361a0",
+        "android_client_info": {
+          "package_name": "com.example.testx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272113082081-2pehsn797kufhinsre0uob3jcgu8ov8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJuPH9W50BP4GxaLdL4U3f9NMpx9rTnqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272113082081-2pehsn797kufhinsre0uob3jcgu8ov8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
