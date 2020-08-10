@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:testx/user_managment.dart';
-import 'main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
@@ -12,8 +12,9 @@ class Signup extends StatefulWidget{
 
 }
 class SignupState extends State<Signup>{
-   String _email;
+  String _email;
   String _password;
+  String _err = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,12 +123,14 @@ class SignupState extends State<Signup>{
                          email: _email , password: _password)
                          .then((signedInUser){
                            UserManagment().storeNewUser(signedInUser , context);
-    
+                           Navigator.of(context).pushReplacementNamed('/filter');
                          }).catchError((e){
+                           setState(() {
+                             _err = "Please check your information";
+                           });
                            print(e);
-
                          });
-                         Navigator.of(context).pushReplacementNamed('/filter');
+                         
 
                         
                       },
@@ -143,6 +146,10 @@ class SignupState extends State<Signup>{
                     
                     )
                 ),
+                Container(
+                  padding: EdgeInsets.only(left: 15,top: 15),
+                  alignment: Alignment.centerLeft,
+                  child: Text(_err,style: TextStyle(color: Colors.red),))
 
           ],
             )

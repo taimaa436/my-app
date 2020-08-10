@@ -6,8 +6,8 @@ class UserManagment {
   storeNewUser(user, context){
     Firestore.instance.collection('/users')
     .add({
-      'email': user.email,
-      'uid': user.uid
+      'email': user.user.email,
+      'uid': user.user.uid
 
     }).
     then((value){
