@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'model.dart';
 import 'article-screen.dart';
+import 'main.dart';
 
 
 
@@ -41,7 +42,17 @@ class SourceScreenState extends State<SourceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Top Headlines'),),
+      appBar: AppBar(
+        title: Text('Top Headlines'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+             onPressed:() {
+               Navigator.of(context).pushNamed('/logout');
+             }
+             )
+        ],
+        ),
       body: Center(
         child: RefreshIndicator(
             key: refreshkey,

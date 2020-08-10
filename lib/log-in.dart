@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'user_managment.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'main.dart';
 import 'news-screen.dart';
 
@@ -21,115 +24,85 @@ class LogInState extends State<LogIn> {
     return Scaffold(
 
           body: Container(
+           
               width: double.infinity,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [
-                        Colors.amber[450],
-                        Colors.amber[350],
-                        Colors.amber[250],
-                        Colors.amber[150],
-
-                      ]
-                  )
-              ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 70.0,
+              child: ListView(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                         SizedBox(
+                      height: 20.0,
                     ),
                     Text('Khabar',
                       style: TextStyle(
                         fontFamily: 'Pacifico',
                         fontSize: 60.0,
-                        color: Colors.white,
+                        color: Colors.amber,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
-                      height: 25.0,
+                      height: 30.0,
                     ),
-
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(50.0),
-                              topRight: Radius.circular(50.0),
-
+                    Container(
+                       padding: EdgeInsets.all(5.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(
+                              10.0),
+                              boxShadow: [BoxShadow(
+                              color: Color.fromRGBO(
+                              235, 162, 9, 1),
+                              blurRadius: 20,
+                              offset: Offset(0, 10),
                             )
-                        ),
-                        child: ListView(children: <Widget>[
-                          Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Column(
-                                children: <Widget>[
-                                  SizedBox(height: 30.0),
-                                  Container(
-                                    // height: 200.0,
+                            ]
 
-                                      padding: EdgeInsets.all(5.0),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(
-                                              10.0),
-                                          boxShadow: [BoxShadow(
-                                            color: Color.fromRGBO(
-                                                235, 162, 9, 1),
-                                            blurRadius: 20,
-                                            offset: Offset(0, 10),
-                                          )
-                                          ]
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                               Container(
 
-                                      ),
-
-                                      child: Column(
-                                        children: <Widget>[
-                                          Container(
-
-                                              child: TextField(
-                                                decoration: InputDecoration(
-                                                  icon: Icon(Icons.email),
-                                                  hintText: 'Enter your Email',
-
-                                                ),
-                                                onChanged: (emailValue) {
-                                                  setState(() {
-                                                    _email = emailValue;
-                                                  });
-                                                },
-
-                                              )
-                                          ),
-                                          SizedBox(height: 20,),
-                                          Container(
-
-                                              child: TextField(
-                                                decoration: InputDecoration(
-                                                  icon: Icon(Icons.lock),
-                                                  hintText: 'Enter your password',
-
-                                                ),
-                                                onChanged: (passwordValue) {
-                                                  setState(() {
-                                                    _password = passwordValue;
-                                                  });
-                                                },
-                                                obscureText: true,
-
-                                              )
-                                          ),
-
-                                        ],
-                                      )
-
+                                child: TextField(
+                                decoration: InputDecoration(
+                                  icon: Icon(Icons.email),
+                                  hintText: 'Enter your Email',
 
                                   ),
-                                  SizedBox(height: 80,),
-                                  Container(
-                                      height: 60,
+                                onChanged: (emailValue) {
+                                  setState(() {
+                                  _email = emailValue;
+                                    });
+                                    },
+
+                                  )
+                              ),
+                              SizedBox(height: 20,),
+                                Container(
+
+                                  child: TextField(
+                                  decoration: InputDecoration(
+                                    icon: Icon(Icons.lock),
+                                    hintText: 'Enter your password',
+
+                                    ),
+                                    onChanged: (passwordValue) {
+                                    setState(() {
+                                      _password = passwordValue;
+                                      });
+                                  },
+                                    obscureText: true,
+
+                                  )
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                ),
+                                 Container(
+                                      height: 40,
                                       width: 140,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
@@ -146,38 +119,92 @@ class LogInState extends State<LogIn> {
                                       ),
                                       child: FlatButton(
                                         onPressed: () {
+                                          FirebaseAuth.instance.signInWithEmailAndPassword(
+                                            email: _email,
+                                             password: _password
+                                             ).then((user){
+                                               Navigator.of(context).pushReplacementNamed('/news');
 
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                                    return SourceScreen();
-                                                  }));
+                                             })
+                                             .catchError((e){
+                                               print(e);
+
+                                             });
+
                                         },
                                         child: Text('log in',
                                           style: TextStyle(
                                             fontFamily: 'Pacifico',
-                                            fontSize: 30.0,
+                                            fontSize: 24.0,
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
 
                                           ),
                                         ),
+                                      
                                       )
-                                  )
+                                  ),
 
 
-                                ],
 
-                              )
+                            ],
                           ),
-                        ],
-                        ),
-                      ),
+
+
                     ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Text('Don\'t have an account?',
+                     style: TextStyle(
+                       fontSize: 30,
+                     ),
+                     
+                    ),
+                     SizedBox(
+                      height: 30.0,
+                    ),
+                    Container(
+                     height: 40,
+                     width: 140,
+                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                       30.0),
+                      gradient: LinearGradient(
+                        colors: [
+                        Colors.amber[500],
+                        Colors.amber[400],
+                        Colors.amber[200],
+                        Colors.amber[100],
 
+                       ]
+                          )
+                              ),
+                     child: FlatButton(
+                      onPressed: () {
+                       Navigator.of(context).pushNamed('/signup');
 
-                  ])
+                      },
+                        child: Text('Sign Up',
+                          style: TextStyle(
+                            fontFamily: 'Pacifico',
+                            fontSize: 24.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
 
+                          ),
+                                ),
+                              
+                              )
+
+                    ),
+                      ],
+                    ),)
+                ],
+
+              ),
+             
+                  
 
           ),
         );

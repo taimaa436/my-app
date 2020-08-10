@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'out.dart';
+import 'log-in.dart';
 import 'main.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-class LogOut extends StatefulWidget{
+class OutNow extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return LogOutState();
+    return OutNowState();
   }
 
 }
-class LogOutState extends State<LogOut>{
+class OutNowState extends State<OutNow>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
      body: Container(
+       color: Colors.white,
        width: double.infinity,
        padding: EdgeInsets.all(10.0),
        child: Column(
@@ -23,11 +23,11 @@ class LogOutState extends State<LogOut>{
             SizedBox(
               height: 100,
             ),
-            Text('are you sure ?',
+            Text('you are out !',
             style:TextStyle(
               fontFamily: 'Pacifico',
               fontSize: 40.0,
-              color: Colors.amber,
+              color: Colors.grey[850],
               fontWeight: FontWeight.bold,
 
             ) ,
@@ -54,17 +54,11 @@ class LogOutState extends State<LogOut>{
                     ),
                     child: FlatButton(
                       onPressed: () {
-                       FirebaseAuth.instance.signOut()
-                       .then((value) {
-                         Navigator.of(context).pushReplacementNamed('/out');
-                       })
-                       .catchError((e){
-                         print(e);
-                       });
+                       Navigator.of(context).pushNamed('/login');
 
                         
                       },
-                      child: Text('yes,log out',
+                      child: Text('log_in again',
                         style: TextStyle(
                           fontFamily: 'Pacifico',
                           fontSize: 24.0,
@@ -79,7 +73,7 @@ class LogOutState extends State<LogOut>{
             ]
        ),
      ),
-    );
+    ) ;
   }
 
 }
