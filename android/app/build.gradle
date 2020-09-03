@@ -38,7 +38,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.testx"
+        applicationId "com.app.Khabar"
         minSdkVersion 21
         targetSdkVersion 28
         multiDexEnabled true
