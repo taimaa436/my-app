@@ -14,7 +14,7 @@ class Signup extends StatefulWidget{
 class SignupState extends State<Signup>{
   String _email;
   String _password;
-  String _err = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,10 +124,9 @@ class SignupState extends State<Signup>{
                          .then((signedInUser){
                            UserManagment().storeNewUser(signedInUser , context);
                            Navigator.of(context).pushReplacementNamed('/filter');
-                         }).catchError((e){
-                           setState(() {
-                             _err = "Please check your information";
-                           });
+                         })
+                         .catchError((e){
+                           
                            print(e);
                          });
                          
@@ -146,10 +145,7 @@ class SignupState extends State<Signup>{
                     
                     )
                 ),
-                Container(
-                  padding: EdgeInsets.only(left: 15,top: 15),
-                  alignment: Alignment.centerLeft,
-                  child: Text(_err,style: TextStyle(color: Colors.red),))
+                
 
           ],
             )

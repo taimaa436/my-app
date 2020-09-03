@@ -50,7 +50,15 @@ class SourceScreenState extends State<SourceScreen> {
              onPressed:() {
                Navigator.of(context).pushNamed('/logout');
              }
-             )
+             ),
+          IconButton(
+            icon: Icon(Icons.account_circle),
+             onPressed:() {
+                Navigator.of(context).pushNamed('/profile');
+               
+             }
+             ),
+             
         ],
         ),
       body: Center(
