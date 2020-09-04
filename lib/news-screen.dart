@@ -34,6 +34,15 @@ class SourceScreenState extends State<SourceScreen> {
   List<String> _categories;
   var refreshkey = GlobalKey<RefreshIndicatorState>();
   Future<SharedPreferences> prefs;
+  Map<String, MaterialColor> _categoriesColors = {
+    "General": Colors.grey,
+    "Business": Colors.red,
+    "Entertainment": Colors.brown,
+    "Health": Colors.green,
+    "Science": Colors.deepPurple,
+    "Sports": Colors.blue,
+    "Technology": Colors.lime
+  };
 
   @override
   void initState() {
@@ -57,7 +66,7 @@ class SourceScreenState extends State<SourceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Top Headlines'),
+        title: Text('Top Sources'),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.exit_to_app),
@@ -93,63 +102,85 @@ class SourceScreenState extends State<SourceScreen> {
                                                 ArticleScreen(source: source)));
                                   },
                                   child: Card(
-                                    elevation: 1.0,
-                                    color: Colors.white,
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 8.0, horizontal: 14.0),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 2.0),
-                                          width: 100.0,
-                                          height: 140.0,
-                                          child: Image.asset("assets/ind.png"),
-                                        ),
-                                        Expanded(
-                                            child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                    child: Container(
-                                                  margin: const EdgeInsets.only(
-                                                      top: 20.0, bottom: 10.0),
-                                                  child: Text('${source.name}',
-                                                      style: TextStyle(
-                                                          fontSize: 18.0,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ))
-                                              ],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),topRight: Radius.circular(20)),
+                                      ),
+                                      elevation: 1.0,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 4.0, horizontal: 8.0),
+                                      child: Container(
+                                        height: 150,
+                                        //padding: EdgeInsets.all(10),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: _categoriesColors[
+                                                      "${source.category[0].toUpperCase()}${source.category.substring(1)}"],
+                                                  ),
+                                              padding:EdgeInsets.only(left: 20),
+                                              margin:
+                                                  EdgeInsets.only(right: 10),
+                                              width: 6,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .center,
+                                                children: <Widget>[
+                                                  Container(
+                                                    padding: EdgeInsets.only(bottom: 8),
+                                                    child: Text(
+                                                        '${source.name}',
+                                                        style: TextStyle(
+                                                            fontSize: 24.0,
+                                                            letterSpacing: 2,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500)),
+                                                  ),
+                                                  Container(
+                                                    height: 2,
+                                                    width: 30,
+                                                    color: _categoriesColors[
+                                                      "${source.category[0].toUpperCase()}${source.category.substring(1)}"],
+                                                  ),
+                                                  Container(
+                                                    padding: EdgeInsets.only(top: 8),
+                                                    child: Text(
+                                                        '${source.category[0].toUpperCase()}${source.category.substring(1)}',
+                                                        style: TextStyle(
+                                                            color: _categoriesColors[
+                                                                "${source.category[0].toUpperCase()}${source.category.substring(1)}"],
+                                                            fontSize: 18.0,
+                                                            letterSpacing: 2,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                             Container(
-                                              child: Text(
-                                                  '${source.description}',
-                                                  style: TextStyle(
-                                                      color: Colors.blueGrey,
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ),
-                                            Container(
-                                              child: Text(
-                                                  'Category : ${source.category}',
-                                                  style: TextStyle(
-                                                      color: Colors.red,
-                                                      fontSize: 14.0,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
+                                              decoration: BoxDecoration(
+                                                  color: _categoriesColors[
+                                                      "${source.category[0].toUpperCase()}${source.category.substring(1)}"],
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                  20),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  20))),
+                                              width: 16,
                                             ),
                                           ],
-                                        ))
-                                      ],
-                                    ),
-                                  ),
+                                        ),
+                                      )),
                                 ))
                             .toList());
                   }

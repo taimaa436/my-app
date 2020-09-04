@@ -47,12 +47,16 @@ class ArticleScreenState extends State<ArticleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'articles',
-      theme: ThemeData(primarySwatch: Colors.amber),
-      home: Scaffold(
-        appBar: AppBar(title: Text(widget.source.name)),
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(
+          widget.source.name,
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+          ),
+        )),
         body: Center(
           child: RefreshIndicator(
               key: refreshkey,
@@ -69,193 +73,70 @@ class ArticleScreenState extends State<ArticleScreen> {
                           .map(
                             (article) => Padding(
                               padding: const EdgeInsets.only(bottom: 15.0),
-                              child: ExpansionTile(
-                                backgroundColor: Colors.grey,
-                                leading: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      width: 40.0,
-                                      height: 40.0,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                article.urlToImage),
-                                            fit: BoxFit.cover),
+                              child: InkWell(
+                                  onTap: () {_launchUrl('${article.url}');},
+                                  child: Card(
+                                  elevation: 1.0,
+                                  margin: const EdgeInsets.symmetric(
+                                            vertical: 2.0, horizontal: 8.0),
+                                  child: Container(
+                                    height: 240,
+                                    child: Stack(
+                                      fit: StackFit.expand,
+                                        children: <Widget>[
+                                        FadeInImage(
+                                          fit: BoxFit.cover,
+                                          alignment: Alignment.center,
+                                          placeholder: AssetImage("assets/back.jpg"),
+                                          image: NetworkImage('${article.urlToImage}'),
+                                        ),
+                                        Container(
+                                        color: Colors.white.withAlpha(220),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(8),
+                                          child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: <Widget>[
+                                            Expanded(
+                                                child: Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  '${article.title}',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Flexible(
+                                                child: Text(
+                                                '${article.description}',
+                                                textAlign: TextAlign.justify,
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 14.0,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                            ),
+                                           Text(
+                                              '${article.publishedAt}'.split(".")[0].replaceFirst(RegExp('T'), ' '),
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 12.0,
+                                              ),
+                                            )
+                                          ],
                                       ),
+                                        ),]
                                     ),
-                                    Text(
-                                      '${article.publishedAt}',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 8.0,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                                title: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      '${article.title}',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(height: 5.0),
-                                    Text(
-                                      '${article.description}',
-                                      style: TextStyle(
-                                          color: Colors.blueGrey,
-                                          fontSize: 13.0,
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                  ],
-                                ),
-                                children: <Widget>[
-                                  Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      child: GestureDetector(
-                                          child: Text(
-                                            '${article.url}',
-                                            style: TextStyle(
-                                                color: Colors.redAccent,
-                                                fontSize: 15.0),
-                                            textDirection: TextDirection.rtl,
-                                          ),
-                                          onTap: () {
-                                            _launchUrl('${article.url}');
-                                          })),
-                                  // Text('${article.content}'),
-                                ],
                               ),
-                            ),
-
-//                       Card(
-//                         elevation: 1.0,
-//                         color: Colors.white,
-//                         margin: const EdgeInsets.symmetric(vertical: 8.0 , horizontal: 8.0),
-//                         child: Row(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: <Widget>[
-////                             Expanded(
-////
-////                                 child: Container(
-////                              margin: const EdgeInsets.symmetric(vertical: 4.0 , horizontal: 4.0),
-////                             //height: MediaQuery.of(context).size.height/2,
-////                             //width: MediaQuery.of(context).size.width/2,
-////
-////                               child: article.urlToImage != null ? Image.network(article.urlToImage,  fit: BoxFit.cover,): Image.asset('assets/ind.png',),
-////
-////                             ))
-////                             ,
-////                            ExpansionTile(
-////                              title: Text('${article.title}',
-////                                style: TextStyle(
-////                                color: Colors.black,
-////                                  fontSize: 16.0,
-////                                  fontWeight: FontWeight.bold,
-////                              ),
-////                              ),
-////                              children: <Widget>[
-////                                Text('${article.content}')
-////                              ],
-////
-////                            ),
-//
-//                          //  ),
-////                          Expanded(
-////                              child: Container(
-////                                child: Column(
-////                                  crossAxisAlignment: CrossAxisAlignment.start,
-////                                  children: <Widget>[
-////                                    Row(
-////                                      children: <Widget>[
-////                                        Expanded(
-////                                            child: Container(
-////
-////                                              margin: const EdgeInsets.only(left: 8.0 , top: 20.0 , bottom: 10.0),
-////                                              child: Text(
-////                                                  '${article.title}',
-////                                                style: TextStyle(
-////                                                  fontSize: 16.0,
-////                                                  fontWeight: FontWeight.bold,
-////
-////                                                ),
-////                                              ),
-////
-////                                            ))
-////                                      ],
-////                                    ),
-////                                    Container(
-////                                      margin: const EdgeInsets.only(left: 8.0),
-////                                      child: Text(
-////                                        '${article.description}',
-////                                        style: TextStyle(
-////                                          fontSize: 12.0,
-////                                          color: Colors.grey,
-////                                          fontWeight: FontWeight.bold,
-////                                        ),
-////
-////                                      ),
-////                                    ),
-////                                    Container(
-////                                      margin: const EdgeInsets.only(left: 8.0 , top: 10.0 , bottom: 10.0),
-////                                      child: Text(
-////                                        'Published At : ${article.publishedAt}',
-////                                        style: TextStyle(
-////                                          fontSize: 12.0,
-////                                          color: Colors.red,
-////                                          fontWeight: FontWeight.bold,
-////                                        ),
-////
-////                                      ),
-////                                    ),
-////
-////                                  ],
-////                                ),
-////                              ),
-////                           ),
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-////                           FittedBox(
-////                             fit: BoxFit.fill,
-////                             child: Row(
-////                               children: <Widget>[
-////                                 Container(
-////                                   width: 150.0,
-////                                   height: 250.0,
-////                                   decoration: BoxDecoration(
-////                                     image: DecorationImage(
-////                                       image: NetworkImage(article.urlToImage),
-////                                       fit: BoxFit.cover
-////                                     ),
-////                                   ),
-////                                 ),
-////                                 Container(
-////                                   height: 250.0,
-////                                   width: MediaQuery.of(context).size.width - 170.0,
-////                                   child:  Text('${article.title}'),
-////
-////                                 ),
-////                               ],
-////                             ),
-////                           ),
-//
-//                           ],
-//                         ),
-//                       ) ,
-                          )
+                            ))
                           .toList(),
                     );
                   }
@@ -264,8 +145,7 @@ class ArticleScreenState extends State<ArticleScreen> {
               ),
               onRefresh: refreshListArticle),
         ),
-      ),
-    );
+      );
   }
 
   _launchUrl(String url) async {

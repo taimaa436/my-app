@@ -119,7 +119,10 @@ class LogInState extends State<LogIn> {
                           setState(() {
                             _err = "";
                           });
-                          FirebaseAuth.instance
+
+                          try {
+
+                            FirebaseAuth.instance
                               .signInWithEmailAndPassword(
                                   email: _email, password: _password)
                               .then((user) {
@@ -139,7 +142,6 @@ class LogInState extends State<LogIn> {
                               }
                             });
                           }).catchError((e) {
-                            print(e);
                             setState(() {
                               if (e.toString().contains("!= null")) {
                                 _err = "Please verify your inputs";
@@ -160,7 +162,27 @@ class LogInState extends State<LogIn> {
                               }
                             });
                           });
-                        },
+                          } catch (e) {
+                          setState(() {
+                              if (e.toString().contains("!= null")) {
+                                _err = "Please verify your inputs";
+                              } else if (e
+                                  .toString()
+                                  .contains("There is no user record")) {
+                                _err = "User not found";
+                              } else if (e
+                                  .toString()
+                                  .contains("ERROR_WRONG_PASSWORD")) {
+                                _err = "Invalid email or password";
+                              } else if (e.toString().contains(
+                                  "Too many unsuccessful login attempts")) {
+                                _err =
+                                    "Too many unsuccessful login attempts. Please try again later";
+                              } else {
+                                _err = "Error";
+                              }
+                            });
+                          }},
                         child: Text(
                           'log in',
                           style: TextStyle(
